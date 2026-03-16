@@ -1,0 +1,41 @@
+name: Radar Informativo
+
+on:
+  schedule:
+    - cron: '17 11 * * *'
+    - cron: '17 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-radar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install yt-dlp
+        run: pip install yt-dlp
+
+      - name: Run radar script
+        env:
+          RUN_LABEL: ${{ github.event.schedule == '17 11 * * *' && 'MEZZOGIORNO' || github.event.schedule == '17 23 * * *' && 'MEZZANOTTE' || 'MANUALE' }}
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+        run: python scripts/radar.py
+
+      - name: Commit output to repository
+        run: |
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@noreply.github.com"
+          git add output/
+          git diff --staged --quiet || git commit -m "Radar run $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push

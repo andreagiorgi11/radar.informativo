@@ -1,0 +1,124 @@
+# FONTI ATTIVE — INVESTIMENTI / MACRO / CRYPTO / SEMIS
+
+investimenti:
+
+  - name: "Lyn Alden"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCTjcnYeFGJJc7yCd_wFUi2Q"
+    type: youtube
+    category: macro
+    priority: alta
+    note: "Macro lungo periodo, Bitcoin nel contesto macro, liquidità"
+
+  - name: "The Macro Compass"
+    rss: "https://themacrocompass.substack.com/feed"
+    type: substack
+    category: macro
+    priority: alta
+    note: "Macro operativa, portfolio strategy, regime macro"
+
+  - name: "Forward Guidance (Blockworks)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCiSPXqtlYosBsQQNBJWBfng"
+    type: youtube
+    category: macro
+    priority: alta
+    note: "Macro e mercati, interviste ad alta densità informativa"
+
+  - name: "Patrick Boyle"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCASM0cgfkNeBEO7Xf-horCQ"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Finanza, eventi mercato, smontaggio narrative deboli"
+
+  - name: "Aswath Damodaran"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCLvnJL8htRR1T9cbSccaoVw"
+    type: youtube
+    category: stock
+    priority: alta
+    note: "Valutazione aziende, struttura mentale corretta per stock analysis"
+
+  - name: "The Compound"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCCT8a7d6S6RJPKNXhBgkRCg"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Business, mercati, equity narrative USA"
+
+  - name: "SemiAnalysis"
+    rss: "https://semianalysis.substack.com/feed"
+    type: substack
+    category: semis
+    priority: alta
+    note: "Semiconduttori, AI infrastructure, supply chain, implicazioni economiche"
+
+  - name: "Fabricated Knowledge"
+    rss: "https://www.fabricatedknowledge.com/feed"
+    type: substack
+    category: semis
+    priority: media
+    note: "Tech investing, semis da angolo economico-industriale"
+
+  - name: "Asianometry"
+    rss: "https://www.asianometry.com/feed"
+    type: substack
+    category: semis
+    priority: media
+    note: "Chip industry, manifattura asiatica, supply chain storia industriale"
+
+  - name: "Empire (Blockworks)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCEOv-8wHvYC6mzsY2Gm5WcQ"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Crypto seria, structure, interviste superiori alla media retail"
+
+# FONTI ATTIVE — AI / MODELLI / TOOL / USE CASE
+
+ai:
+
+  - name: "Latent Space"
+    rss: "https://www.latent.space/feed"
+    type: substack
+    category: ai_modelli
+    priority: alta
+    note: "AI engineers, agenti, modelli, infra, podcast tecnici"
+
+  - name: "TheSequence"
+    rss: "https://thesequence.substack.com/feed"
+    type: substack
+    category: ai_modelli
+    priority: alta
+    note: "ML/AI curatoriale ad alta utilità, riduce rumore settore"
+
+  - name: "One Useful Thing"
+    rss: "https://www.oneusefulthing.org/feed"
+    type: substack
+    category: ai_usecase
+    priority: alta
+    note: "Use case reali, impatto lavoro con AI, agenti, adozione pratica"
+
+  - name: "AI Explained"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCNJ1Ymd5yFuUPtn21xtRbbw"
+    type: youtube
+    category: ai_modelli
+    priority: media
+    note: "Nuovi modelli, benchmark, sviluppo frontier, sintesi leggibile"
+
+  - name: "Ben's Bites"
+    rss: "https://bensbites.substack.com/feed"
+    type: substack
+    category: ai_tool
+    priority: media
+    note: "Tool discovery, workflow, startup AI, panoramica pratica"
+
+# FONTI IN VALIDAZIONE
+# Monitorate ma non promosse ad attive. Appaiono nel report con label separata.
+
+validazione:
+
+  - name: "Fabricated Knowledge — Doug O'Laughlin"
+    rss: "https://substack.com/@foolallthetime/feed"
+    type: substack
+    category: semis
+    priority: media
+    note: "Da validare: qualità e frequenza pubblicazione"
