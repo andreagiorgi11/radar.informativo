@@ -28,6 +28,15 @@ jobs:
       - name: Validate feeds
         run: python scripts/validate_feeds.py
 
+      - name: Test yt-dlp
+        run: |
+          pip install yt-dlp
+          yt-dlp --version
+          yt-dlp --write-auto-sub --skip-download --sub-lang it,en \
+            --output "/tmp/test_transcript" \
+            "https://www.youtube.com/watch?v=6AWqgLu85Wc" 2>&1
+          ls /tmp/test_transcript* 2>&1 || echo "Nessun file generato"
+
       - name: Run radar script
         env:
           RUN_LABEL: ${{ github.event.schedule == '17 11 * * *' && 'MEZZOGIORNO' || github.event.schedule == '17 23 * * *' && 'MEZZANOTTE' || 'MANUALE' }}
