@@ -25,10 +25,12 @@ jobs:
       - name: Install ffmpeg
         run: sudo apt-get install -y ffmpeg
 
-      - name: Install Node.js (JS runtime per yt-dlp)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install Node.js runtime (apt)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm
+          node --version
+          npm --version
 
       - name: Install yt-dlp
         run: pip install yt-dlp
@@ -49,7 +51,6 @@ jobs:
         run: python scripts/validate_feeds.py
 
       - name: Test yt-dlp
-        continue-on-error: true
         run: |
           pip install yt-dlp
           yt-dlp --version
@@ -60,7 +61,7 @@ jobs:
           yt-dlp --js-runtimes node --remote-components ejs:github --ignore-no-formats-error --write-auto-sub --skip-download --sub-lang it,en \
             --output "/tmp/test_transcript" \
             $EXTRA \
-            "https://www.youtube.com/watch?v=6AWqgLu85Wc" 2>&1
+            "https://www.youtube.com/watch?v=6AWqgLu85Wc" 2>&1 || echo "[WARN] Test yt-dlp fallito ma non blocca la run"
           ls /tmp/test_transcript* 2>&1 || echo "Nessun file generato"
 
       - name: Run radar script
