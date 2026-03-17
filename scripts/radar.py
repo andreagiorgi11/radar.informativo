@@ -9,6 +9,7 @@ import requests
 import time
 import html
 import tempfile
+import shutil
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from collections import Counter
@@ -258,14 +259,26 @@ def count_words(text: str) -> int:
     return len(re.findall(r"\b\w+\b", text or ""))
 
 
+def get_ytdlp_extra_args() -> list[str]:
+    args: list[str] = []
+    if shutil.which("node"):
+        args.extend(["--js-runtimes", "node"])
+
+    cookies_path = os.environ.get("YTDLP_COOKIES_PATH")
+    if cookies_path and Path(cookies_path).exists():
+        args.extend(["--cookies", cookies_path])
+    return args
+
+
 def get_video_info(video_url: str) -> dict:
     cmd = [
         "yt-dlp",
         "--dump-single-json",
         "--skip-download",
         "--no-warnings",
-        video_url,
     ]
+    cmd.extend(get_ytdlp_extra_args())
+    cmd.append(video_url)
     ritardi = [3, 8]
     for i, ritardo in enumerate(ritardi):
         try:
@@ -330,6 +343,7 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
         "--output",
         str(tempdir / "%(id)s.%(ext)s"),
     ]
+    cmd.extend(get_ytdlp_extra_args())
     if auto:
         cmd.append("--write-auto-sub")
     else:

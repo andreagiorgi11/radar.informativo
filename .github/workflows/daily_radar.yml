@@ -33,6 +33,18 @@ jobs:
       - name: Install yt-dlp
         run: pip install yt-dlp
 
+      - name: Prepare YouTube cookies (optional)
+        env:
+          YTDLP_COOKIES_TXT: ${{ secrets.YTDLP_COOKIES_TXT }}
+        run: |
+          if [ -n "$YTDLP_COOKIES_TXT" ]; then
+            printf "%s" "$YTDLP_COOKIES_TXT" > /tmp/yt_cookies.txt
+            echo "YTDLP_COOKIES_PATH=/tmp/yt_cookies.txt" >> $GITHUB_ENV
+            echo "[OK] Cookies YouTube caricate"
+          else
+            echo "[WARN] Secret YTDLP_COOKIES_TXT assente: provo senza cookies"
+          fi
+
       - name: Validate feeds
         run: python scripts/validate_feeds.py
 
@@ -40,8 +52,13 @@ jobs:
         run: |
           pip install yt-dlp
           yt-dlp --version
-          yt-dlp --write-auto-sub --skip-download --sub-lang it,en \
+          EXTRA=""
+          if [ -n "$YTDLP_COOKIES_PATH" ]; then
+            EXTRA="--cookies $YTDLP_COOKIES_PATH"
+          fi
+          yt-dlp --js-runtimes node --write-auto-sub --skip-download --sub-lang it,en \
             --output "/tmp/test_transcript" \
+            $EXTRA \
             "https://www.youtube.com/watch?v=6AWqgLu85Wc" 2>&1
           ls /tmp/test_transcript* 2>&1 || echo "Nessun file generato"
 
