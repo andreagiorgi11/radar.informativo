@@ -30,7 +30,7 @@ CONFIG = {
     "min_citazioni_fonte_candidata": 3,
     "seen_ttl_ore": 72,
     # Limita il costo transcript su GitHub Actions per run più stabile.
-    "max_transcript_youtube_per_run": 25,
+    "max_transcript_youtube_per_run": 12,
     "yt_dlp_timeout_sec": 90,
 }
 
@@ -345,7 +345,7 @@ def build_sub_lang_order(info: dict) -> list[str]:
     subtitles = info.get("subtitles") or {}
     automatic = info.get("automatic_captions") or {}
     declared = list(subtitles.keys()) + list(automatic.keys())
-    for lang in declared:
+    for lang in declared[:4]:
         add_lang(lang)
 
     add_lang("it")
@@ -356,10 +356,10 @@ def build_sub_lang_order(info: dict) -> list[str]:
         if best not in order:
             order.append(best)
 
-    return order
+    return order[:5]
 
 
-def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tuple[Path | None, bool]:
+def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tuple[Path | None, bool, bool]:
     cmd = [
         "yt-dlp",
         "--skip-download",
@@ -378,7 +378,7 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
         cmd.append("--write-sub")
     cmd.append(video_url)
 
-    ritardi = [3, 8]
+    ritardi = [3]
     last_error = None
     for i, ritardo in enumerate(ritardi):
         try:
@@ -393,7 +393,10 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
             if proc.returncode == 0:
                 vtts = sorted(tempdir.glob("*.vtt"), key=lambda p: p.stat().st_mtime, reverse=True)
                 if vtts:
-                    return vtts[0], True
+                    return vtts[0], True, False
+            err_text = (proc.stderr or "") + "\n" + (proc.stdout or "")
+            if "Sign in to confirm you" in err_text:
+                return None, False, True
             last_error = RuntimeError(proc.stderr.strip() or f"exit {proc.returncode}")
         except Exception as exc:
             last_error = exc
@@ -402,7 +405,7 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
 
     if last_error:
         print(f"[WARN] yt-dlp fallito su {video_url}: {last_error}")
-    return None, False
+    return None, False, False
 
 
 def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
@@ -429,13 +432,17 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
         quality = "assente"
 
         for sub_lang in lang_order:
-            vtt_path, ok = run_yt_dlp(video_url, tempdir, auto=False, sub_lang=sub_lang)
+            vtt_path, ok, blocked = run_yt_dlp(video_url, tempdir, auto=False, sub_lang=sub_lang)
             quality = "manuale"
+            if blocked:
+                return result
             if ok:
                 break
 
-            vtt_path, ok = run_yt_dlp(video_url, tempdir, auto=True, sub_lang=sub_lang)
+            vtt_path, ok, blocked = run_yt_dlp(video_url, tempdir, auto=True, sub_lang=sub_lang)
             quality = "automatico"
+            if blocked:
+                return result
             if ok:
                 break
 
