@@ -23,7 +23,7 @@ from googleapiclient.http import MediaFileUpload
 
 
 CONFIG = {
-    "finestra_ore": 13,
+    "finestra_ore": 24,
     "min_durata_secondi": 240,
     "min_wpm": 80,
     "min_parole_video_lungo": 500,
@@ -714,7 +714,7 @@ def genera_markdown(
 ### 1. Copia questo prompt e incollalo su Grok
 
 ```
-Nelle ultime 12 ore, cosa hanno scritto di rilevante su macro mercati,
+Nelle ultime 24 ore, cosa hanno scritto di rilevante su macro mercati,
 tassi, liquidità, crypto, Bitcoin, semiconduttori e AI i profili che
 seguo? Includi solo:
 - tweet con dati, numeri o tesi originali
