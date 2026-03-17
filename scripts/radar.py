@@ -263,6 +263,7 @@ def get_ytdlp_extra_args() -> list[str]:
     args: list[str] = []
     if shutil.which("node"):
         args.extend(["--js-runtimes", "node"])
+        args.extend(["--remote-components", "ejs:github"])
 
     cookies_path = os.environ.get("YTDLP_COOKIES_PATH")
     if cookies_path and Path(cookies_path).exists():
