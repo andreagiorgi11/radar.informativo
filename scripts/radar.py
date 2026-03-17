@@ -134,6 +134,14 @@ def carica_fonti(feeds_path: Path) -> tuple[list, list]:
     return fonti_attive, fonti_validazione
 
 
+def parse_feed_with_requests(url: str):
+    headers = {"User-Agent": "Mozilla/5.0 (RadarInformativo/1.0)"}
+    resp = requests.get(url, headers=headers, timeout=25, allow_redirects=True)
+    feed = feedparser.parse(resp.content)
+    feed["status"] = resp.status_code
+    return feed
+
+
 def fetch_rss(fonte: dict) -> list[dict]:
     ritardi = [3, 10, 30]
     last_error = None
@@ -141,7 +149,7 @@ def fetch_rss(fonte: dict) -> list[dict]:
 
     for i, ritardo in enumerate(ritardi):
         try:
-            feed = feedparser.parse(fonte["rss"])
+            feed = parse_feed_with_requests(fonte["rss"])
             status = getattr(feed, "status", 200)
             if status != 200:
                 raise RuntimeError(f"HTTP status {status}")

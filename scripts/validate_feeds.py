@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import feedparser
+import requests
 import yaml
 
 
@@ -28,8 +29,19 @@ def load_sources(feeds_path: Path) -> list[dict]:
     return sources
 
 
+def parse_feed_with_requests(url: str):
+    headers = {"User-Agent": "Mozilla/5.0 (RadarInformativo/1.0)"}
+    resp = requests.get(url, headers=headers, timeout=25, allow_redirects=True)
+    feed = feedparser.parse(resp.content)
+    feed["status"] = resp.status_code
+    return feed
+
+
 def validate_source(source: dict, now: datetime) -> dict:
-    feed = feedparser.parse(source["rss"])
+    try:
+        feed = parse_feed_with_requests(source["rss"])
+    except Exception as exc:
+        feed = {"status": f"ERR:{exc.__class__.__name__}", "entries": []}
     status = feed.get("status", "N/A")
 
     result = {
