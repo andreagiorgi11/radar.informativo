@@ -3,7 +3,7 @@
 investimenti:
 
   - name: "Lyn Alden"
-    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCTjcnYeFGJJc7yCd_wFUi2Q"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC26OTzxt9ixdrr3qdUJrYBQ"
     type: youtube
     category: macro
     priority: alta
@@ -72,6 +72,174 @@ investimenti:
     priority: media
     note: "Crypto seria, structure, interviste superiori alla media retail"
 
+  - name: "investire.biz (principale)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCZZlp4DXQYwVUIY9jgV_S1w"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "investire.biz (analisi)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCtjjRkGJXf8bENTx0-51uOw"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Vito Lops"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCqCYKSvF_sJl78-bxD5q6NQ"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "forecaster.biz"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCSyg3cbt3l7FAkStQoyyTaw"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "investing.com Italia"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCl3XK7i6eQNkG5GXnGlK4BQ"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "investing.com (internazionale)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCPYQ564F-6kEaiX1wwmzDNA"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Fonte internazionale mercati — da validare frequenza e densità"
+
+  - name: "Marco Casario"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCZp2KqGRkO1goEAaxX5Huyg"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Swiss Capital TV"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCjrtlxg9ojCZiZUuXn8oIQg"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Davide D'Isidoro"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCwwurOJB9vuUmafMKO8-pVQ"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Luca Lorenzoni"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCk1P4Oj67lxJixvDZwnxgGA"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Antonio Cioli Puviani"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC6HK4VWp3KYYVaxDErQJjgg"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Francesco Carrino"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCWCWphgRsyBosRj2vTeg2yg"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Ingegneri in Borsa"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC0zbDQUYqdac-UPHPTTIjwQ"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte italiana investimenti — da validare frequenza e densità"
+
+  - name: "Société Générale (trading)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCGJsCxEoOJEC6iNhizbpsZw"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte certificati e trading — da validare densità informativa"
+
+  - name: "Société Générale (corporate)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC9UGHDZqj-_x2UmLStzRMxQ"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Fonte corporate — da validare rilevanza per mercati"
+
+  - name: "Marco Costanza"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCuTGQbyF-NfmNOopYxz0P7g"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Aftersyde"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCyeE5RmrX5foJY_wGX-YPqA"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Decrypto"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCCHX6w7OoXQk5y9zByUsx1g"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Tiziano Tridico"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCY3TW6Oj67m6su5oiE80LwA"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Leonardo Vecchio"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC0lLgJ7OajNAKySIukyJFEQ"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Sicurezza Bitcoin"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC8ggTpKXbpfRmfpOrg_hGwQ"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "The Crypto Gateway"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC9X2f4pVXSNzsJ2c6ZQVqBQ"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Fratelli di Crypto"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCWrcYj2C3gTFrzYOzQMJRaw"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
+  - name: "Mauro Caimi"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCkkP8HpQG0LuMzGUMJzLEMw"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Fonte italiana crypto — filtro aggressivo richiesto"
+
 # FONTI ATTIVE — AI / MODELLI / TOOL / USE CASE
 
 ai:
@@ -110,6 +278,48 @@ ai:
     category: ai_tool
     priority: media
     note: "Tool discovery, workflow, startup AI, panoramica pratica"
+
+  - name: "Enkk"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCvGwatHyCegYsG_y09qH1zw"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
+
+  - name: "GabrySolution"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC8oBIE88TrCD1b-gnVqXzgw"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
+
+  - name: "AI Universo"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC0VbZQFO4gkOzsQ3zfKMYmw"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
+
+  - name: "AI per Tutti"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC48TBX2UC_tF_yxVi5PU1HQ"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
+
+  - name: "Andrea Ciraolo"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCANtyg_73WZaOaQ5sCHOoLg"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
+
+  - name: "Riccardo Belli Contarini"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC1e1Xt2nsUy9lqP_R7ES5yA"
+    type: youtube
+    category: ai_usecase
+    priority: media
+    note: "Fonte italiana AI — da validare frequenza e densità"
 
 # FONTI IN VALIDAZIONE
 # Monitorate ma non promosse ad attive. Appaiono nel report con label separata.

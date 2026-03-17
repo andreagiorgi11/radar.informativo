@@ -25,6 +25,9 @@ jobs:
       - name: Install yt-dlp
         run: pip install yt-dlp
 
+      - name: Validate feeds
+        run: python scripts/validate_feeds.py
+
       - name: Run radar script
         env:
           RUN_LABEL: ${{ github.event.schedule == '17 11 * * *' && 'MEZZOGIORNO' || github.event.schedule == '17 23 * * *' && 'MEZZANOTTE' || 'MANUALE' }}

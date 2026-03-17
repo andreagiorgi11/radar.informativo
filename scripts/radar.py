@@ -35,6 +35,18 @@ def now_utc() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def load_feed_validation(output_dir: Path) -> list[str]:
+    path = output_dir / "feed_health_latest.json"
+    if not path.exists():
+        return []
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        items = payload.get("items", [])
+        return [it.get("message", "").strip() for it in items if it.get("message")]
+    except Exception:
+        return []
+
+
 def normalize_text(text: str) -> str:
     if not text:
         return ""
@@ -569,6 +581,7 @@ def genera_markdown(
     fonti_candidate: list,
     run_label: str,
     stats: dict,
+    feed_validation_lines: list[str],
 ) -> str:
     now_it = datetime.now(ZoneInfo("Europe/Rome"))
     data_italiana = now_it.strftime("%d/%m/%Y")
@@ -623,6 +636,12 @@ def genera_markdown(
 | Pubblicati nel report | {stats['pubblicati_report']} |
 | Transcript disponibili | {stats['transcript_disponibili']} |
 | Transcript sospetti | {stats['transcript_sospetti']} |
+
+---
+
+## 🩺 VALIDAZIONE FEED
+
+{os.linesep.join(feed_validation_lines) if feed_validation_lines else "_Nessun log validazione feed disponibile._"}
 
 ---
 
@@ -831,7 +850,16 @@ def main():
     }
     fonti_candidate = scopri_fonti_candidate(tutti_items, fonti_attive_domini)
 
-    md_content = genera_markdown(items_inv, items_ai, items_val, fonti_candidate, run_label, stats)
+    feed_validation_lines = load_feed_validation(output_dir)
+    md_content = genera_markdown(
+        items_inv,
+        items_ai,
+        items_val,
+        fonti_candidate,
+        run_label,
+        stats,
+        feed_validation_lines,
+    )
     output_path.write_text(md_content, encoding="utf-8")
     print(f"[OK] File generato: {filename}")
 
