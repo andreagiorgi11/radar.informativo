@@ -143,6 +143,26 @@ def parse_feed_with_requests(url: str):
     return feed
 
 
+def parse_feed_with_requests_substack_alt(url: str):
+    parsed = urlparse(url)
+    host = parsed.netloc.replace("www.", "")
+    if "substack.com" not in host:
+        return None
+    sub = host.split(".")[0].strip()
+    if not sub:
+        return None
+    alt_url = f"https://{sub}.substack.com/feed"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (RadarInformativo/1.0)",
+        "Cookie": "",
+    }
+    resp = requests.get(alt_url, headers=headers, timeout=25, allow_redirects=True)
+    feed = feedparser.parse(resp.content)
+    feed["status"] = resp.status_code
+    feed["alt_url"] = alt_url
+    return feed
+
+
 def fetch_rss(fonte: dict) -> list[dict]:
     ritardi = [3, 10, 30]
     last_error = None
@@ -152,6 +172,11 @@ def fetch_rss(fonte: dict) -> list[dict]:
         try:
             feed = parse_feed_with_requests(fonte["rss"])
             status = getattr(feed, "status", 200)
+            if status == 403 and fonte.get("type") == "substack":
+                alt_feed = parse_feed_with_requests_substack_alt(fonte["rss"])
+                if alt_feed is not None and getattr(alt_feed, "status", 200) == 200:
+                    feed = alt_feed
+                    status = 200
             if status != 200:
                 raise RuntimeError(f"HTTP status {status}")
             break
@@ -240,6 +265,8 @@ def parse_vtt(vtt_path: Path) -> str:
         if raw.isdigit():
             continue
         if raw.upper().startswith("NOTE"):
+            continue
+        if raw.startswith("Kind:") or raw.startswith("Language:"):
             continue
         clean = re.sub(r"<[^>]+>", "", raw)
         clean = html.unescape(clean).strip()
@@ -447,6 +474,8 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
 
 def applica_filtri(item: dict) -> tuple[bool, str]:
     if item["type"] == "youtube":
+        if "/shorts/" in (item.get("link", "") or ""):
+            return False, "YouTube Short — nessun transcript disponibile"
         if item.get("durata_secondi") and item["durata_secondi"] < CONFIG["min_durata_secondi"]:
             return False, f"video troppo corto ({item['durata_secondi']}s)"
 
@@ -577,7 +606,10 @@ def format_flag(item: dict) -> str:
 
 
 def extract_snippet(item: dict, max_len: int = 600) -> str:
-    text = item.get("transcript_text") or item.get("text") or item.get("descrizione", "")
+    raw_text = item.get("transcript_text") or item.get("text") or item.get("descrizione", "")
+    righe = raw_text.split("\n")
+    righe_pulite = [r for r in righe if not r.startswith(("Kind:", "Language:"))]
+    text = "\n".join(righe_pulite).strip()
     text = normalize_text(text)
     if len(text) <= max_len:
         return text or "(nessun estratto disponibile)"

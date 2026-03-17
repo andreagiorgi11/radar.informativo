@@ -1,6 +1,7 @@
-import json
+﻿import json
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 import feedparser
 import requests
@@ -37,13 +38,40 @@ def parse_feed_with_requests(url: str):
     return feed
 
 
+def parse_feed_with_requests_substack_alt(url: str):
+    parsed = urlparse(url)
+    host = parsed.netloc.replace("www.", "")
+    if "substack.com" not in host:
+        return None
+
+    sub = host.split(".")[0].strip()
+    if not sub:
+        return None
+
+    alt_url = f"https://{sub}.substack.com/feed"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (RadarInformativo/1.0)",
+        "Cookie": "",
+    }
+    resp = requests.get(alt_url, headers=headers, timeout=25, allow_redirects=True)
+    feed = feedparser.parse(resp.content)
+    feed["status"] = resp.status_code
+    feed["alt_url"] = alt_url
+    return feed
+
+
 def validate_source(source: dict, now: datetime) -> dict:
     try:
         feed = parse_feed_with_requests(source["rss"])
+        status = feed.get("status", "N/A")
+        if status == 403 and source.get("type") == "substack":
+            alt_feed = parse_feed_with_requests_substack_alt(source["rss"])
+            if alt_feed is not None:
+                feed = alt_feed
     except Exception as exc:
         feed = {"status": f"ERR:{exc.__class__.__name__}", "entries": []}
-    status = feed.get("status", "N/A")
 
+    status = feed.get("status", "N/A")
     result = {
         "name": source["name"],
         "rss": source["rss"],
@@ -56,19 +84,24 @@ def validate_source(source: dict, now: datetime) -> dict:
 
     if status != 200:
         result["severity"] = "error"
-        result["message"] = f"[ERROR]   {source['name']} — status {status} — URL da correggere"
+        if status == 403 and source.get("type") == "substack":
+            result["message"] = (
+                f"[ERROR]   {source['name']} - status 403 - feed probabilmente riservato ai subscriber paganti"
+            )
+        else:
+            result["message"] = f"[ERROR]   {source['name']} - status {status} - URL da correggere"
         return result
 
     entries = getattr(feed, "entries", [])
     if not entries:
         result["severity"] = "warn"
-        result["message"] = f"[WARN]    {source['name']} — feed senza entry"
+        result["message"] = f"[WARN]    {source['name']} - feed senza entry"
         return result
 
     latest = parse_published(entries[0])
     if not latest:
         result["severity"] = "warn"
-        result["message"] = f"[WARN]    {source['name']} — data ultimo post non disponibile"
+        result["message"] = f"[WARN]    {source['name']} - data ultimo post non disponibile"
         return result
 
     days_ago = (now - latest).days
@@ -79,12 +112,12 @@ def validate_source(source: dict, now: datetime) -> dict:
     if days_ago > WARN_DAYS:
         result["severity"] = "warn"
         result["message"] = (
-            f"[WARN]    {source['name']} — ultimo post: {date_str} ({days_ago} giorni fa) — fonte silenziosa"
+            f"[WARN]    {source['name']} - ultimo post: {date_str} ({days_ago} giorni fa) - fonte silenziosa"
         )
     elif days_ago > 0:
-        result["message"] = f"[OK]      {source['name']} — ultimo post: {date_str} ({days_ago} giorni fa)"
+        result["message"] = f"[OK]      {source['name']} - ultimo post: {date_str} ({days_ago} giorni fa)"
     else:
-        result["message"] = f"[OK]      {source['name']} — ultimo post: {date_str}"
+        result["message"] = f"[OK]      {source['name']} - ultimo post: {date_str}"
 
     return result
 
