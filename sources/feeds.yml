@@ -240,6 +240,56 @@ investimenti:
     priority: media
     note: "Fonte italiana crypto — filtro aggressivo richiesto"
 
+
+  - name: "Blockworks Macro"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCkrwgzhIBKccuDsi_SvZtnQ"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Macro internazionale ? da validare frequenza e densit?"
+
+  - name: "Sven Carlin"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCrTTBSUr0zhPU56UQljag5A"
+    type: youtube
+    category: stock
+    priority: media
+    note: "Value investing ? da validare frequenza e densit?"
+
+  - name: "PensionCraft"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UC9OIwUcx-Uss7xj7s1P5XGw"
+    type: youtube
+    category: macro
+    priority: media
+    note: "Macro e portfolio ? da validare frequenza e densit?"
+
+  - name: "Benjamin Cowen"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCRvqjQPSeaWn-uEx-w0XOIg"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Analisi quantitativa crypto ? da validare frequenza e densit?"
+
+  - name: "Coin Bureau"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCqK_GSMbpiV8spgD3ZGloSw"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Crypto research e narrative ? filtro qualitativo richiesto"
+
+  - name: "Bankless"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCAl9Ld79qaZxp9JzEOwd3aA"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Crypto infrastructure e policy ? da validare frequenza e densit?"
+
+  - name: "aantonop (Andreas Antonopoulos)"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCJWCJCWOxBYSi5DhCieLOLQ"
+    type: youtube
+    category: crypto
+    priority: media
+    note: "Bitcoin education ? da validare frequenza e densit?"
+
 # FONTI ATTIVE — AI / MODELLI / TOOL / USE CASE
 
 ai:
@@ -320,6 +370,21 @@ ai:
     category: ai_usecase
     priority: media
     note: "Fonte italiana AI — da validare frequenza e densità"
+
+
+  - name: "Matt Wolfe"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UChpleBmo18P08aKCIgti38g"
+    type: youtube
+    category: ai_modelli
+    priority: media
+    note: "AI tools e produttivit? ? da validare frequenza e densit?"
+
+  - name: "Two Minute Papers"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg"
+    type: youtube
+    category: ai_modelli
+    priority: media
+    note: "Ricerca AI accessibile ? da validare frequenza e densit?"
 
 # FONTI IN VALIDAZIONE
 # Monitorate ma non promosse ad attive. Appaiono nel report con label separata.

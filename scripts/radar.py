@@ -28,6 +28,9 @@ CONFIG = {
     "min_parole_video_lungo": 500,
     "min_citazioni_fonte_candidata": 3,
     "seen_ttl_ore": 72,
+    # Limita il costo transcript su GitHub Actions per run più stabile.
+    "max_transcript_youtube_per_run": 25,
+    "yt_dlp_timeout_sec": 90,
 }
 
 
@@ -255,7 +258,7 @@ def get_video_info(video_url: str) -> dict:
         "--no-warnings",
         video_url,
     ]
-    ritardi = [5, 15, 45]
+    ritardi = [3, 8]
     for i, ritardo in enumerate(ritardi):
         try:
             proc = subprocess.run(
@@ -263,7 +266,7 @@ def get_video_info(video_url: str) -> dict:
                 capture_output=True,
                 text=True,
                 check=False,
-                timeout=120,
+                timeout=45,
             )
             if proc.returncode == 0 and proc.stdout.strip():
                 return json.loads(proc.stdout)
@@ -325,7 +328,7 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
         cmd.append("--write-sub")
     cmd.append(video_url)
 
-    ritardi = [5, 15, 45]
+    ritardi = [3, 8]
     last_error = None
     for i, ritardo in enumerate(ritardi):
         try:
@@ -335,7 +338,7 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
                 capture_output=True,
                 text=True,
                 check=False,
-                timeout=180,
+                timeout=CONFIG["yt_dlp_timeout_sec"],
             )
             if proc.returncode == 0:
                 vtts = sorted(tempdir.glob("*.vtt"), key=lambda p: p.stat().st_mtime, reverse=True)
@@ -362,6 +365,10 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
         "flag_sospetto": False,
         "motivo_flag": None,
     }
+
+    # Shorts spesso triggerano anti-bot su yt-dlp e non servono al radar long-form.
+    if "/shorts/" in (video_url or ""):
+        return result
 
     info = get_video_info(video_url)
     lang_order = build_sub_lang_order(info)
@@ -788,6 +795,7 @@ def main():
     }
 
     tutti_items = []
+    transcript_youtube_count = 0
     for fonte in fonti_attive + fonti_validazione:
         items_raw = fetch_rss(fonte)
         stats["item_rss_trovati"] += len(items_raw)
@@ -812,12 +820,26 @@ def main():
                 continue
 
             if item["type"] == "youtube":
-                transcript_data = get_transcript(item["link"], item.get("durata_secondi"))
-                item.update(transcript_data)
-                if item.get("transcript_quality") in {"manuale", "automatico"}:
-                    stats["transcript_disponibili"] += 1
-                if item.get("flag_sospetto"):
-                    stats["transcript_sospetti"] += 1
+                if transcript_youtube_count < CONFIG["max_transcript_youtube_per_run"]:
+                    transcript_data = get_transcript(item["link"], item.get("durata_secondi"))
+                    item.update(transcript_data)
+                    transcript_youtube_count += 1
+                    if item.get("transcript_quality") in {"manuale", "automatico"}:
+                        stats["transcript_disponibili"] += 1
+                    if item.get("flag_sospetto"):
+                        stats["transcript_sospetti"] += 1
+                else:
+                    item.update(
+                        {
+                            "text": None,
+                            "transcript_text": None,
+                            "quality": "assente",
+                            "transcript_quality": "assente",
+                            "word_count": 0,
+                            "flag_sospetto": False,
+                            "motivo_flag": None,
+                        }
+                    )
             else:
                 item["transcript_text"] = item.get("descrizione", "")
                 item["word_count"] = count_words(item["transcript_text"])
