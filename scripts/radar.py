@@ -625,7 +625,8 @@ def format_flag(item: dict) -> str:
 def extract_snippet(item: dict, max_len: int = 600) -> str:
     transcript_text = item.get("transcript_text")
     descrizione_rss = item.get("descrizione", "")
-    estratto = transcript_text[:max_len] if transcript_text else descrizione_rss[:max_len]
+    # Modalita' full-text: usa transcript completo quando disponibile.
+    estratto = transcript_text if transcript_text else descrizione_rss
     return estratto if estratto else "(nessun estratto disponibile)"
 
 
