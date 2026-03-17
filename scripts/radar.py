@@ -369,7 +369,7 @@ def build_sub_lang_order(info: dict) -> list[str]:
     return order[:5]
 
 
-def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tuple[Path | None, bool, bool]:
+def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tuple[Path | None, bool, bool, str]:
     cmd = [
         "yt-dlp",
         "--skip-download",
@@ -403,10 +403,10 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
             if proc.returncode == 0:
                 vtts = sorted(tempdir.glob("*.vtt"), key=lambda p: p.stat().st_mtime, reverse=True)
                 if vtts:
-                    return vtts[0], True, False
+                    return vtts[0], True, False, ""
             err_text = (proc.stderr or "") + "\n" + (proc.stdout or "")
             if "Sign in to confirm you" in err_text:
-                return None, False, True
+                return None, False, True, err_text
             last_error = RuntimeError(proc.stderr.strip() or f"exit {proc.returncode}")
         except Exception as exc:
             last_error = exc
@@ -415,7 +415,22 @@ def run_yt_dlp(video_url: str, tempdir: Path, auto: bool, sub_lang: str) -> tupl
 
     if last_error:
         print(f"[WARN] yt-dlp fallito su {video_url}: {last_error}")
-    return None, False, False
+    return None, False, False, str(last_error) if last_error else ""
+
+
+def categorize_transcript_error(err_text: str) -> str:
+    txt = (err_text or "").lower()
+    if "sign in to confirm you" in txt or "you're not a bot" in txt:
+        return "bot_check"
+    if "live event will begin" in txt or "premieres in" in txt:
+        return "live_non_iniziata"
+    if "too many requests" in txt or "http error 429" in txt:
+        return "rate_limited_429"
+    if "subtitle" in txt:
+        return "no_subtitles"
+    if txt.strip():
+        return "unknown"
+    return "no_subtitles"
 
 
 def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
@@ -427,14 +442,17 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
         "word_count": 0,
         "flag_sospetto": False,
         "motivo_flag": None,
+        "transcript_fail_reason": None,
     }
 
     # Shorts spesso triggerano anti-bot su yt-dlp e non servono al radar long-form.
     if "/shorts/" in (video_url or ""):
+        result["transcript_fail_reason"] = "shorts"
         return result
 
     info = get_video_info(video_url)
     lang_order = build_sub_lang_order(info)
+    last_err_text = ""
 
     with tempfile.TemporaryDirectory(prefix="radar_sub_") as tmp:
         tempdir = Path(tmp)
@@ -442,21 +460,26 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
         quality = "assente"
 
         for sub_lang in lang_order:
-            vtt_path, ok, blocked = run_yt_dlp(video_url, tempdir, auto=False, sub_lang=sub_lang)
+            vtt_path, ok, blocked, err_text = run_yt_dlp(video_url, tempdir, auto=False, sub_lang=sub_lang)
+            last_err_text = err_text or last_err_text
             quality = "manuale"
             if blocked:
+                result["transcript_fail_reason"] = "bot_check"
                 return result
             if ok:
                 break
 
-            vtt_path, ok, blocked = run_yt_dlp(video_url, tempdir, auto=True, sub_lang=sub_lang)
+            vtt_path, ok, blocked, err_text = run_yt_dlp(video_url, tempdir, auto=True, sub_lang=sub_lang)
+            last_err_text = err_text or last_err_text
             quality = "automatico"
             if blocked:
+                result["transcript_fail_reason"] = "bot_check"
                 return result
             if ok:
                 break
 
         if vtt_path is None:
+            result["transcript_fail_reason"] = categorize_transcript_error(last_err_text)
             return result
 
         text = parse_vtt(vtt_path)
@@ -484,6 +507,7 @@ def get_transcript(video_url: str, durata_secondi: int | None = None) -> dict:
                 "word_count": word_count,
                 "flag_sospetto": flag_sospetto,
                 "motivo_flag": motivo_flag,
+                "transcript_fail_reason": None,
             }
         )
         return result
@@ -645,7 +669,7 @@ def render_items(items: list, validazione: bool = False) -> str:
         lines.append(f"- **Transcript**: {format_transcript_status(item)}")
         lines.append(f"- **Flag**: {format_flag(item)}")
         lines.append(f"- **Link**: {item['link']}")
-        lines.append(f"- **Estratto**: {extract_snippet(item)}")
+        lines.append(f"- **Trascrizione**: {extract_snippet(item)}")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -668,6 +692,14 @@ def genera_markdown(
             candidate_rows.append(f"| {c['domain']} | {c['citazioni']} |")
     else:
         candidate_rows.append("| _Nessuna fonte candidata_ | 0 |")
+
+    fail_rows = []
+    fail_map = stats.get("transcript_fail_reasons", {})
+    for key in ["shorts", "live_non_iniziata", "bot_check", "no_subtitles", "rate_limited_429", "unknown"]:
+        if fail_map.get(key, 0) > 0:
+            fail_rows.append(f"| {key} | {fail_map.get(key, 0)} |")
+    if not fail_rows:
+        fail_rows.append("| _nessuno_ | 0 |")
 
     md = f"""# Radar Informativo — {data_italiana} | Run {run_label}
 *Generato automaticamente | {stats['fonti_monitorate']} fonti monitorate | {stats['item_processati']} item processati | {stats['pubblicati_report']} pubblicati*
@@ -712,6 +744,12 @@ def genera_markdown(
 | Pubblicati nel report | {stats['pubblicati_report']} |
 | Transcript disponibili | {stats['transcript_disponibili']} |
 | Transcript sospetti | {stats['transcript_sospetti']} |
+
+### Transcript mancanti per motivo
+
+| Motivo | Conteggio |
+|---|---|
+{os.linesep.join(fail_rows)}
 
 ---
 
@@ -861,6 +899,14 @@ def main():
         "pubblicati_report": 0,
         "transcript_disponibili": 0,
         "transcript_sospetti": 0,
+        "transcript_fail_reasons": {
+            "shorts": 0,
+            "live_non_iniziata": 0,
+            "bot_check": 0,
+            "no_subtitles": 0,
+            "rate_limited_429": 0,
+            "unknown": 0,
+        },
     }
 
     tutti_items = []
@@ -886,6 +932,8 @@ def main():
                     stats["scartati_promozionali"] += 1
                 elif "fuori tema" in motivo:
                     stats["scartati_fuori_tema"] += 1
+                elif "YouTube Short" in motivo:
+                    stats["transcript_fail_reasons"]["shorts"] += 1
                 continue
 
             if item["type"] == "youtube":
@@ -893,6 +941,11 @@ def main():
                     transcript_data = get_transcript(item["link"], item.get("durata_secondi"))
                     item.update(transcript_data)
                     item["transcript_text"] = transcript_data.get("text")
+                    fail_reason = item.get("transcript_fail_reason")
+                    if fail_reason:
+                        stats["transcript_fail_reasons"][fail_reason] = (
+                            stats["transcript_fail_reasons"].get(fail_reason, 0) + 1
+                        )
                     transcript_youtube_count += 1
                     if item.get("transcript_quality") in {"manuale", "automatico"}:
                         stats["transcript_disponibili"] += 1
@@ -908,6 +961,7 @@ def main():
                             "word_count": 0,
                             "flag_sospetto": False,
                             "motivo_flag": None,
+                            "transcript_fail_reason": "unknown",
                         }
                     )
             else:
