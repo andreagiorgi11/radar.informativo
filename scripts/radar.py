@@ -3,6 +3,7 @@ import yaml
 import os
 import json
 import hashlib
+import sys
 import subprocess
 import re
 import requests
@@ -16,10 +17,19 @@ from collections import Counter
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 from google.oauth2 import service_account
 from google.oauth2.credentials import Credentials as UserCredentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+
+
+load_dotenv()
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
 
 
 CONFIG = {
