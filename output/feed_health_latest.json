@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-17T09:49:25.448715+00:00",
+  "generated_at": "2026-03-17T14:26:19.665492+00:00",
   "warn_days": 21,
   "items": [
     {
@@ -34,9 +34,9 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCASM0cgfkJxQ1ICmRilfHLw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Patrick Boyle — ultimo post: 14/03/2026 (2 giorni fa)",
+      "message": "[OK]      Patrick Boyle — ultimo post: 14/03/2026 (3 giorni fa)",
       "last_post_iso": "2026-03-14T12:45:06+00:00",
-      "days_ago": 2
+      "days_ago": 3
     },
     {
       "name": "Aswath Damodaran",
@@ -88,18 +88,18 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCEOv-8wHvYC6mzsY2Gm5WcQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Empire (Blockworks) — ultimo post: 13/03/2026 (3 giorni fa)",
+      "message": "[OK]      Empire (Blockworks) — ultimo post: 13/03/2026 (4 giorni fa)",
       "last_post_iso": "2026-03-13T13:00:45+00:00",
-      "days_ago": 3
+      "days_ago": 4
     },
     {
       "name": "investire.biz (principale)",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCZZlp4DXQYwVUIY9jgV_S1w",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      investire.biz (principale) — ultimo post: 16/03/2026",
+      "message": "[OK]      investire.biz (principale) — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T11:00:36+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "investire.biz (analisi)",
@@ -115,9 +115,9 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCqCYKSvF_sJl78-bxD5q6NQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Vito Lops — ultimo post: 16/03/2026",
+      "message": "[OK]      Vito Lops — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T10:27:08+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "forecaster.biz",
@@ -151,36 +151,36 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCZp2KqGRkO1goEAaxX5Huyg",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Marco Casario — ultimo post: 16/03/2026",
+      "message": "[OK]      Marco Casario — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T11:00:08+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "Swiss Capital TV",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCjrtlxg9ojCZiZUuXn8oIQg",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Swiss Capital TV — ultimo post: 16/03/2026",
+      "message": "[OK]      Swiss Capital TV — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T13:52:08+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "Davide D'Isidoro",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCwwurOJB9vuUmafMKO8-pVQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Davide D'Isidoro — ultimo post: 16/03/2026",
+      "message": "[OK]      Davide D'Isidoro — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T12:15:06+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "Luca Lorenzoni",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCk1P4Oj67lxJixvDZwnxgGA",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Luca Lorenzoni — ultimo post: 14/03/2026 (2 giorni fa)",
+      "message": "[OK]      Luca Lorenzoni — ultimo post: 14/03/2026 (3 giorni fa)",
       "last_post_iso": "2026-03-14T13:49:02+00:00",
-      "days_ago": 2
+      "days_ago": 3
     },
     {
       "name": "Antonio Cioli Puviani",
@@ -196,8 +196,8 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCWCWphgRsyBosRj2vTeg2yg",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Francesco Carrino — ultimo post: 16/03/2026",
-      "last_post_iso": "2026-03-16T12:51:06+00:00",
+      "message": "[OK]      Francesco Carrino — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T13:14:51+00:00",
       "days_ago": 0
     },
     {
@@ -205,18 +205,18 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC0zbDQUYqdac-UPHPTTIjwQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Ingegneri in Borsa — ultimo post: 15/03/2026 (1 giorni fa)",
-      "last_post_iso": "2026-03-15T16:46:55+00:00",
-      "days_ago": 1
+      "message": "[OK]      Ingegneri in Borsa — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T13:49:11+00:00",
+      "days_ago": 0
     },
     {
       "name": "Société Générale (trading)",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCGJsCxEoOJEC6iNhizbpsZw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Société Générale (trading) — ultimo post: 16/03/2026 (1 giorni fa)",
-      "last_post_iso": "2026-03-16T09:41:57+00:00",
-      "days_ago": 1
+      "message": "[OK]      Société Générale (trading) — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T11:18:44+00:00",
+      "days_ago": 0
     },
     {
       "name": "Société Générale (corporate)",
@@ -233,7 +233,7 @@
       "status": 200,
       "severity": "ok",
       "message": "[OK]      Marco Costanza — ultimo post: 17/03/2026",
-      "last_post_iso": "2026-03-17T09:16:48+00:00",
+      "last_post_iso": "2026-03-17T12:45:39+00:00",
       "days_ago": 0
     },
     {
@@ -259,9 +259,9 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCY3TW6Oj67m6su5oiE80LwA",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Tiziano Tridico — ultimo post: 16/03/2026",
+      "message": "[OK]      Tiziano Tridico — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T11:59:47+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "Leonardo Vecchio",
@@ -277,17 +277,17 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8ggTpKXbpfRmfpOrg_hGwQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Sicurezza Bitcoin — ultimo post: 15/03/2026 (1 giorni fa)",
-      "last_post_iso": "2026-03-15T18:30:30+00:00",
-      "days_ago": 1
+      "message": "[OK]      Sicurezza Bitcoin — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T13:01:26+00:00",
+      "days_ago": 0
     },
     {
       "name": "The Crypto Gateway",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC9X2f4pVXSNzsJ2c6ZQVqBQ",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      The Crypto Gateway — ultimo post: 16/03/2026",
-      "last_post_iso": "2026-03-16T19:43:30+00:00",
+      "message": "[OK]      The Crypto Gateway — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T11:33:58+00:00",
       "days_ago": 0
     },
     {
@@ -295,8 +295,8 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCWrcYj2C3gTFrzYOzQMJRaw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Fratelli di Crypto — ultimo post: 16/03/2026",
-      "last_post_iso": "2026-03-16T21:53:14+00:00",
+      "message": "[OK]      Fratelli di Crypto — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T10:57:55+00:00",
       "days_ago": 0
     },
     {
@@ -322,18 +322,18 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCrTTBSUr0zhPU56UQljag5A",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Sven Carlin — ultimo post: 14/03/2026 (2 giorni fa)",
-      "last_post_iso": "2026-03-14T13:01:07+00:00",
-      "days_ago": 2
+      "message": "[OK]      Sven Carlin — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T13:00:45+00:00",
+      "days_ago": 0
     },
     {
       "name": "PensionCraft",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC9OIwUcx-Uss7xj7s1P5XGw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      PensionCraft — ultimo post: 14/03/2026 (2 giorni fa)",
-      "last_post_iso": "2026-03-14T12:01:01+00:00",
-      "days_ago": 2
+      "message": "[OK]      PensionCraft — ultimo post: 16/03/2026",
+      "last_post_iso": "2026-03-16T16:15:44+00:00",
+      "days_ago": 0
     },
     {
       "name": "Benjamin Cowen",
@@ -349,17 +349,17 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCqK_GSMbpiV8spgD3ZGloSw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Coin Bureau — ultimo post: 15/03/2026 (1 giorni fa)",
-      "last_post_iso": "2026-03-15T12:45:02+00:00",
-      "days_ago": 1
+      "message": "[OK]      Coin Bureau — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T14:01:27+00:00",
+      "days_ago": 0
     },
     {
       "name": "Bankless",
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCAl9Ld79qaZxp9JzEOwd3aA",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Bankless — ultimo post: 16/03/2026",
-      "last_post_iso": "2026-03-16T10:36:44+00:00",
+      "message": "[OK]      Bankless — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T11:51:48+00:00",
       "days_ago": 0
     },
     {
@@ -394,9 +394,9 @@
       "rss": "https://www.oneusefulthing.org/feed",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      One Useful Thing — ultimo post: 12/03/2026 (4 giorni fa)",
+      "message": "[OK]      One Useful Thing — ultimo post: 12/03/2026 (5 giorni fa)",
       "last_post_iso": "2026-03-12T14:10:07+00:00",
-      "days_ago": 4
+      "days_ago": 5
     },
     {
       "name": "AI Explained",
@@ -421,9 +421,9 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UCvGwatHyCegYsG_y09qH1zw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Enkk — ultimo post: 16/03/2026",
+      "message": "[OK]      Enkk — ultimo post: 16/03/2026 (1 giorni fa)",
       "last_post_iso": "2026-03-16T10:45:03+00:00",
-      "days_ago": 0
+      "days_ago": 1
     },
     {
       "name": "GabrySolution",
@@ -439,8 +439,8 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC0VbZQFO4gkOzsQ3zfKMYmw",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      AI Universo — ultimo post: 16/03/2026",
-      "last_post_iso": "2026-03-16T19:51:04+00:00",
+      "message": "[OK]      AI Universo — ultimo post: 17/03/2026",
+      "last_post_iso": "2026-03-17T11:17:59+00:00",
       "days_ago": 0
     },
     {
@@ -466,9 +466,9 @@
       "rss": "https://www.youtube.com/feeds/videos.xml?channel_id=UC1e1Xt2nsUy9lqP_R7ES5yA",
       "status": 200,
       "severity": "ok",
-      "message": "[OK]      Riccardo Belli Contarini — ultimo post: 14/03/2026 (2 giorni fa)",
+      "message": "[OK]      Riccardo Belli Contarini — ultimo post: 14/03/2026 (3 giorni fa)",
       "last_post_iso": "2026-03-14T14:16:05+00:00",
-      "days_ago": 2
+      "days_ago": 3
     },
     {
       "name": "Matt Wolfe",
