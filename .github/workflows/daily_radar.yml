@@ -29,7 +29,7 @@ jobs:
         env:
           RUN_LABEL: ${{ github.event.schedule == '17 11 * * *' && 'MEZZOGIORNO' || github.event.schedule == '17 23 * * *' && 'MEZZANOTTE' || 'MANUALE' }}
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
-          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          GDRIVE_FOLDER_ID: "1TM6t0_WUWZ_0BSt9KzgXcvYflPqbdE9"
         run: python scripts/radar.py
 
       - name: Commit output to repository
