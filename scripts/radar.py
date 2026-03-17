@@ -40,7 +40,7 @@ CONFIG = {
     "min_citazioni_fonte_candidata": 3,
     "seen_ttl_ore": 72,
     # Limita il costo transcript su GitHub Actions per run più stabile.
-    "max_transcript_youtube_per_run": 12,
+    "max_transcript_youtube_per_run": 20,
     "yt_dlp_timeout_sec": 90,
 }
 
@@ -623,14 +623,10 @@ def format_flag(item: dict) -> str:
 
 
 def extract_snippet(item: dict, max_len: int = 600) -> str:
-    raw_text = item.get("transcript_text") or item.get("text") or item.get("descrizione", "")
-    righe = raw_text.split("\n")
-    righe_pulite = [r for r in righe if not r.startswith(("Kind:", "Language:"))]
-    text = "\n".join(righe_pulite).strip()
-    text = normalize_text(text)
-    if len(text) <= max_len:
-        return text or "(nessun estratto disponibile)"
-    return text[:max_len].rstrip() + "..."
+    transcript_text = item.get("transcript_text")
+    descrizione_rss = item.get("descrizione", "")
+    estratto = transcript_text[:max_len] if transcript_text else descrizione_rss[:max_len]
+    return estratto if estratto else "(nessun estratto disponibile)"
 
 
 def render_items(items: list, validazione: bool = False) -> str:
@@ -895,6 +891,7 @@ def main():
                 if transcript_youtube_count < CONFIG["max_transcript_youtube_per_run"]:
                     transcript_data = get_transcript(item["link"], item.get("durata_secondi"))
                     item.update(transcript_data)
+                    item["transcript_text"] = transcript_data.get("text")
                     transcript_youtube_count += 1
                     if item.get("transcript_quality") in {"manuale", "automatico"}:
                         stats["transcript_disponibili"] += 1
@@ -957,25 +954,7 @@ def main():
     output_path.write_text(md_content, encoding="utf-8")
     print(f"[OK] File generato: {filename}")
 
-    credentials_json = os.environ.get("GDRIVE_CREDENTIALS")
-    oauth_client_id = os.environ.get("GDRIVE_OAUTH_CLIENT_ID")
-    oauth_client_secret = os.environ.get("GDRIVE_OAUTH_CLIENT_SECRET")
-    oauth_refresh_token = os.environ.get("GDRIVE_OAUTH_REFRESH_TOKEN")
-    folder_id = os.environ.get("GDRIVE_FOLDER_ID")
-    service, auth_mode = build_drive_service(
-        credentials_json,
-        oauth_client_id,
-        oauth_client_secret,
-        oauth_refresh_token,
-    )
-    if service and folder_id:
-        try:
-            file_id = upload_to_drive(output_path, folder_id, service)
-            print(f"[OK] Caricato su Drive ({auth_mode}): {file_id}")
-        except Exception as exc:
-            print(f"[WARN] Upload Drive fallito, run completata comunque: {exc}")
-    else:
-        print("[WARN] Credenziali Drive non trovate, skip upload")
+    print("[INFO] Upload Drive disattivato (runner locale)")
 
 
 if __name__ == "__main__":
