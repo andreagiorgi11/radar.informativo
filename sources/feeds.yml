@@ -17,14 +17,14 @@ investimenti:
     note: "Macro operativa, portfolio strategy, regime macro"
 
   - name: "Forward Guidance (Blockworks)"
-    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCiSPXqtlYosBsQQNBJWBfng"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCkrwgzhIBKccuDsi_SvZtnQ"
     type: youtube
     category: macro
     priority: alta
     note: "Macro e mercati, interviste ad alta densità informativa"
 
   - name: "Patrick Boyle"
-    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCASM0cgfkNeBEO7Xf-horCQ"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCASM0cgfkJxQ1ICmRilfHLw"
     type: youtube
     category: macro
     priority: media
@@ -38,7 +38,7 @@ investimenti:
     note: "Valutazione aziende, struttura mentale corretta per stock analysis"
 
   - name: "The Compound"
-    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCCT8a7d6S6RJPKNXhBgkRCg"
+    rss: "https://www.youtube.com/feeds/videos.xml?channel_id=UCBRpqrzuuqE8TZcWw75JSdw"
     type: youtube
     category: stock
     priority: media
@@ -392,7 +392,7 @@ ai:
 validazione:
 
   - name: "Fabricated Knowledge — Doug O'Laughlin"
-    rss: "https://substack.com/@foolallthetime/feed"
+    rss: "https://foolallthetime.substack.com/feed"
     type: substack
     category: semis
     priority: media
