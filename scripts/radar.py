@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
 from google.oauth2 import service_account
+from google.oauth2.credentials import Credentials as UserCredentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
@@ -686,12 +687,35 @@ AUTORE | TEMA | SINTESI IN 2 RIGHE | LINK
     return md
 
 
-def upload_to_drive(filepath: Path, folder_id: str, credentials_json: str) -> str:
-    credentials = service_account.Credentials.from_service_account_info(
-        json.loads(credentials_json),
-        scopes=["https://www.googleapis.com/auth/drive"],
-    )
-    service = build("drive", "v3", credentials=credentials)
+def build_drive_service(
+    credentials_json: str | None,
+    oauth_client_id: str | None,
+    oauth_client_secret: str | None,
+    oauth_refresh_token: str | None,
+):
+    scopes = ["https://www.googleapis.com/auth/drive"]
+    if oauth_client_id and oauth_client_secret and oauth_refresh_token:
+        credentials = UserCredentials(
+            token=None,
+            refresh_token=oauth_refresh_token,
+            token_uri="https://oauth2.googleapis.com/token",
+            client_id=oauth_client_id,
+            client_secret=oauth_client_secret,
+            scopes=scopes,
+        )
+        return build("drive", "v3", credentials=credentials), "oauth"
+
+    if credentials_json:
+        credentials = service_account.Credentials.from_service_account_info(
+            json.loads(credentials_json),
+            scopes=scopes,
+        )
+        return build("drive", "v3", credentials=credentials), "service_account"
+
+    return None, None
+
+
+def upload_to_drive(filepath: Path, folder_id: str, service) -> str:
 
     query = f"name='{filepath.name}' and '{folder_id}' in parents and trashed=false"
     existing = service.files().list(q=query, fields="files(id)").execute()
@@ -812,11 +836,20 @@ def main():
     print(f"[OK] File generato: {filename}")
 
     credentials_json = os.environ.get("GDRIVE_CREDENTIALS")
+    oauth_client_id = os.environ.get("GDRIVE_OAUTH_CLIENT_ID")
+    oauth_client_secret = os.environ.get("GDRIVE_OAUTH_CLIENT_SECRET")
+    oauth_refresh_token = os.environ.get("GDRIVE_OAUTH_REFRESH_TOKEN")
     folder_id = os.environ.get("GDRIVE_FOLDER_ID")
-    if credentials_json and folder_id:
+    service, auth_mode = build_drive_service(
+        credentials_json,
+        oauth_client_id,
+        oauth_client_secret,
+        oauth_refresh_token,
+    )
+    if service and folder_id:
         try:
-            file_id = upload_to_drive(output_path, folder_id, credentials_json)
-            print(f"[OK] Caricato su Drive: {file_id}")
+            file_id = upload_to_drive(output_path, folder_id, service)
+            print(f"[OK] Caricato su Drive ({auth_mode}): {file_id}")
         except Exception as exc:
             print(f"[WARN] Upload Drive fallito, run completata comunque: {exc}")
     else:

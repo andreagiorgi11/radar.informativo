@@ -29,6 +29,9 @@ jobs:
         env:
           RUN_LABEL: ${{ github.event.schedule == '17 11 * * *' && 'MEZZOGIORNO' || github.event.schedule == '17 23 * * *' && 'MEZZANOTTE' || 'MANUALE' }}
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_OAUTH_CLIENT_ID: ${{ secrets.GDRIVE_OAUTH_CLIENT_ID }}
+          GDRIVE_OAUTH_CLIENT_SECRET: ${{ secrets.GDRIVE_OAUTH_CLIENT_SECRET }}
+          GDRIVE_OAUTH_REFRESH_TOKEN: ${{ secrets.GDRIVE_OAUTH_REFRESH_TOKEN }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: python scripts/radar.py
 
